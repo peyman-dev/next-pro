@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+}
+
+@layer components {
+  .dark .border {
+    @apply border-white/10;
+  }
+}
+
+/* YekanBakh FontFamily */
+@font-face {
+  font-family: "YekanBakh-Light";
+  src: url("./../fonts/YekanBakh-Light.woff") format("woff");
+}
+
+@font-face {
+  font-family: "YekanBakh-Regular";
+  src: url("./../fonts/YekanBakh-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "YekanBakh-Medium";
+  src: url("./../fonts/YekanBakh-Medium.woff") format("woff");
+}
+
+@font-face {
+  font-family: "YekanBakh-Bold";
+  src: url("./../fonts/YekanBakh-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "YekanBakh-Heavy";
+  src: url("./../fonts/YekanBakh-Heavy.woff") format("woff");
+}
+
+@font-face {
+  font-family: "YekanBakh-Fat";
+  src: url("./../fonts/YekanBakh-Fat.woff") format("woff");
+}
+
+body {
+  @apply dark:bg-zinc-900 font-YekanBakh-Regular bg-zinc-100 text-zinc-800 dark:text-zinc-100;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
