@@ -15,8 +15,14 @@ const Schema = mongoose.Schema({
         ref: "Question",
         required: true
     },
+    isPublished: {
+        type: Boolean,
+        default: false
+    }
+}, {
+    timestamps: true
 })
 
-const AnswerModel = mongoose.model.Answer || mongoose.model("Answer", Schema);
+const AnswerModel = mongoose.models.Answer || mongoose.model("Answer", Schema);
 
 export default AnswerModel;

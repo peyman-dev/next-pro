@@ -6,21 +6,24 @@ import React from "react";
 
 const NavLink = ({
   href,
-  class: className,
+  class: _classes,
   activeClass,
   children,
   exact,
   ...rest
 }) => {
   const path = usePathname();
-  const isActive = String(path).startsWith(href);
+  // is Active
+  const isActive = exact ? path === href : path.startsWith(href);
 
-  const styles = classNames(className, {
-    [activeClass]: isActive,
-  });
+  const styles = classNames(_classes);
 
   return (
-    <Link href={href} className={styles} {...rest}>
+    <Link
+      href={href}
+      className={`${styles} ${isActive && activeClass}`}
+      {...rest}
+    >
       {children}
     </Link>
   );

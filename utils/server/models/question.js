@@ -18,29 +18,30 @@ const schema = mongoose.Schema({
         type: Array,
         required: true,
     },
-    answers: {
-        type: Array,
-        required: true,
-    },
     author: {
         type: mongoose.Types.ObjectId,
         ref: 'User',
         required: true,
     },
-    category: {
-        type: String,
+    language: {
+        type: mongoose.Types.ObjectId,
+        ref: "Language",
         required: true,
     },
+    likes: {
+        type: Number,
+        default: 0
+    }
 }, {
     timestamps: true
 })
 
-schema.virtual("answers", {
+schema.virtual("responses", {
     ref: "Answer",
     localField: "_id",
     foreignField: "question"
 })
 
-const QuestionModel = mongoose.model.Question || mongoose.model("Question", schema);
+const QuestionModel = mongoose.models.Question || mongoose.model("Question", schema);
 
 export default QuestionModel

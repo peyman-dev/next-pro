@@ -1,8 +1,7 @@
-import { hash, genSalt } from 'bcryptjs'
+import { hash, genSalt, compare } from 'bcryptjs'
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers'
-import { NextResponse } from 'next/server'
-import useUserStore from '../stores/user-store'
+import { NextRequest } from 'next/server'
 
 const PRVIATE_KEY = process.env.JWT_SECRET
 const encodedKey = new TextEncoder().encode(PRVIATE_KEY)
@@ -13,14 +12,13 @@ export const decoder = async (payload) => {
     return data
 }
 
-export const sessionVerify = async payload => {
+export const sessionVerify = async (request = NextRequest) => {
+    console.log(request)
     try {
-        const decodedData = await decoder(payload)
-        const hook = useUserStore()
-        console.log(hook.setUser({
-            username: ":)"
-        }))
-        console.log(decodedData)
+        // const decodedData = await decoder(payload)
+
+        return 'S'
+
     } catch (error) {
 
     }
@@ -36,7 +34,7 @@ export const passwordHash = async (password) => {
 export const encrypt = async (payload) => {
     return await new SignJWT(payload)
         .setProtectedHeader({
-            alg: "HS256"
+            alg: "HS256",
         })
         .setExpirationTime("90d")
         .sign(encodedKey)
@@ -47,8 +45,6 @@ export const encrypt = async (payload) => {
 export const setSession = async (payload) => {
     try {
         const token = await encrypt(payload);
-
-        console.log(token)
 
         if (token) {
             const cookieStore = cookies();
@@ -64,14 +60,12 @@ export const setSession = async (payload) => {
     }
 };
 
-export const validateSession = async (req, res, next) => {
+export const passwordDecode = async (password, hashed) => {
     try {
-        const _cookies = await cookies()
-        const session = _cookies.get("session")
+        const isCorrect = await compare(password, hashed)
 
-        console.log(session)
+        return isCorrect
     } catch (error) {
-        console.log(error.message)
+        return;
     }
 }
-

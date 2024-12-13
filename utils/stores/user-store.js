@@ -2,11 +2,14 @@ import { create } from "zustand"
 
 const useUserStore = create((set, get) => ({
     user: null,
-    setUser: user => set({
-        user
-    }),
-    getUser: () => console.log(get().user),
-    getToken: (token) => console.log(token)
+    isLoggedIn: false,
+    setUser: payload => {
+        set({
+            user: payload,
+            isLoggedIn: true
+        })
+    },
+    getUser: () => get().user
 }))
 
 export default useUserStore

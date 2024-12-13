@@ -6,18 +6,22 @@ const Languages = async () => {
   try {
     const { languages, message, success } = await getLanguages();
 
+    console.log(languages)
 
     if (success && Array.isArray(languages) && languages.length > 0) {
       return (
         <section className="grid grid-cols-4 gap-4 mt-10">
-          {languages.map((language) => (
-            <Language
-              key={language._id}
-              followers={language.followers}
-              image={language.image}
-              name={language.name}
-              shortName={language.shortName}
-            />
+          {languages.map((language, id) => (
+            <>
+              {console.log(language)}
+              <Language
+                key={language.id}
+                followers={language.followers.length}
+                image={language.image}
+                name={language.name}
+                shortName={language.shortName}
+              />
+            </>
           ))}
         </section>
       );

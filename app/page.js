@@ -1,16 +1,19 @@
+import ExploreLanguages from '@/components/layouts/pages/home/explore-languages'
 import Hero from '@/components/layouts/pages/home/Hero'
-import LatestQuestions from '@/components/layouts/pages/home/LatestQuestions'
 import React from 'react'
-
-
+import { getLanguages } from './actions'
+import TrendingQuestions from '@/components/layouts/pages/home/trending-questions'
 
 const page = async () => {
+  const langs_res = await getLanguages()
+
 
   return (
     <>
-      <main className='sm:py-10 mb-20 space-y-32'>
+      <main tabIndex={"1"} className='lg:mb-20 group-has-focus:bg-black space-y-32'>
         <Hero />
-        <LatestQuestions />
+        <ExploreLanguages langs={langs_res.languages} />
+        <TrendingQuestions />
       </main>
     </>
   )

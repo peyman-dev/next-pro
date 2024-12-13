@@ -1,9 +1,10 @@
 "use client";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-const LoginForm = () => {
+const LoginForm = ({ login }) => {
   const [userInfos, setUserInfos] = useState({
     identifier: "",
     password: "",
@@ -11,8 +12,17 @@ const LoginForm = () => {
   });
 
   const getLogin = async () => {
-   
-    console.log(data);
+    const result = await login(userInfos);
+
+    if (result.success) {
+      return toast.success("ورود با موفقیت انجام شد", {
+        onClose: () => {
+          redirect("/");
+        },
+      });
+    } else {
+      return toast.error(result.message);
+    }
   };
 
   return (
@@ -45,7 +55,7 @@ const LoginForm = () => {
           autoComplete="billing bday-month webauthn"
         />
         <input
-          type="text"
+          type="password"
           className="w-full bg-transparent duration-150 focus-within:ring-2 placeholder:text-zinc-500 font-YekanBakh-Medium outline-none px-4 text-sm h-10 rounded-md border"
           placeholder="گذرواژه خود را وارد نمائید"
           onChange={({ target }) => {

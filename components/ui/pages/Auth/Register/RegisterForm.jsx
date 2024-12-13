@@ -1,4 +1,5 @@
 "use client";
+import { Input } from "@/components/_ui/input";
 import InputField from "@/components/ui/InputField";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -12,6 +13,12 @@ const RegisterForm = ({ register }) => {
   const [password, setPassword] = useState("");
 
   const submitted = async () => {
+    console.log({
+      fullname: fullName,
+      username,
+      email,
+      password,
+    });
     const request = await register({
       fullname: fullName,
       username,
@@ -21,10 +28,11 @@ const RegisterForm = ({ register }) => {
 
     if (request.success) {
       toast.success(request.message, {
-        onClose: () => redirect('/')
-      })
+        onClose: () => redirect("/"),
+      });
     } else {
-      toast.error(request.message)
+      console.log(request.message);
+      toast.error(request.message);
     }
   };
 
@@ -39,21 +47,25 @@ const RegisterForm = ({ register }) => {
           </Link>
         </div>
       </div>
-      <div className="w-full">
-        <InputField
-          valueSave={setFullname}
-          placeholder={"نام و نام خانوادگی"}
-        />
-        <InputField valueSave={setUsername} placeholder={"نام کاربری"} />
-        <InputField valueSave={setEmail} placeholder={"آدرس ایمیل"} />
-        <InputField
-          type={"password"}
-          valueSave={setPassword}
-          placeholder={"گذرواژه"}
-        />
+      <div className="w-full space-y-3">
+        <Input autoComplete="Skibidi" onChange={event => {
+          setFullname(event.target.value)
+        }} placeholder={"نام و نام خانوادگی"} />
+        <Input autoComplete="Skibidi" onChange={event => {
+          setUsername(event.target.value)
+        }} placeholder={"نام کاربری"} />
+        <Input autoComplete="Skibidi" onChange={event => {
+          setEmail(event.target.value)
+        }} placeholder={"آدرس ایمیل"} />
+        <Input autoComplete="Skibidi" onChange={event => {
+          setPassword(event.target.value)
+        }} type={"password"} placeholder={"گذرواژه"} />
       </div>
       <div className="w-full">
-        <button onClick={submitted} className="w-full h-10 rounded-md bg-indigo-600 text-center text-white font-YekanBakh-Bold shadow-inner shadow-indigo-500 hover:bg-opacity-90 duration-150 focus-within:ring-4">
+        <button
+          onClick={submitted}
+          className="w-full h-10 rounded-md bg-indigo-600 text-center text-white font-YekanBakh-Bold shadow-inner shadow-indigo-500 hover:bg-opacity-90 duration-150 focus-within:ring-4"
+        >
           ثبت نام
         </button>
       </div>

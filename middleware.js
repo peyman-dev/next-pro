@@ -1,17 +1,22 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { sessionVerify } from "./utils/server/sessions";
 
 export async function middleware(req) {
   const { pathname } = req.nextUrl;
-  const session = req.cookies.get('session')?.value;
+  const baseURL = req.url
+  const hasAccessToken = req.cookies.get('session')?.value ? true : false
+  
 
-  console.log(session)
 
-
-
+  if (hasAccessToken && String(pathname).startsWith('/auth')) {
+    return NextResponse.redirect(new URL('/dashboard/', req.url))
+  }
   if (pathname == '/auth') {
     return NextResponse.redirect(new URL('/auth/login', req.url));
+  }
+
+  
+  if (String(pathname).startsWith('/dashboard') && !hasAccessToken) {
+    return NextResponse.redirect(new URL('/auth/login', req.url))
   }
 
   const response = NextResponse.next();

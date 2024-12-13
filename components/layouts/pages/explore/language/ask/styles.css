@@ -1,0 +1,3 @@
+.question-main {
+  @apply flex gap-5 child:rounded-lg child:border child:mx-auto mx-auto child:p-4 container child:w-full;
+}

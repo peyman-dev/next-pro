@@ -1,6 +1,6 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
-export const schema = mongoose.Schema({
+const schema = mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -17,21 +17,37 @@ export const schema = mongoose.Schema({
         type: String,
         required: true,
     },
-    followers: {
-        type: Number,
-        default: 0,
+    isVisible: {
+        type: Boolean,
+        default: false,
     },
+    description: {
+        type: String,
+        required: true
+    }
 }, {
-    timestamps: true
-})
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+});
+
 
 schema.virtual("questions", {
     ref: "Question",
     localField: "_id",
     foreignField: "language",
     justOne: false,
-})
+});
 
-const LanguageModel = mongoose.models.Language || mongoose.model("Language", schema)
+schema.virtual("followers", {
+    ref: "Follow",
+    localField: "_id",
+    foreignField: "language",
+    justOne: false,
 
-export default LanguageModel
+});
+
+
+const LanguageModel = mongoose.models.Language || mongoose.model("Language", schema);
+
+export default LanguageModel;

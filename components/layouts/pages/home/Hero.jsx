@@ -1,31 +1,41 @@
-'use client'
-import Logo from "@/components/ui/Logo";
-import useUserStore from "@/utils/stores/user-store";
+"use client";
+import { Button } from "@/components/_ui/button";
+import useThemeStore from "@/utils/stores/theme-store";
 import React from "react";
 
-const Hero = () => {
-  const s = useUserStore()
-  console.log(s)
-  return (
-    <section>
-      <div className="w-full h-[500px] sm:rounded-lg overflow-hidden shadow-lg relative items-center flex-col gap-4 flex justify-center bg-black text-white">
-        <div className="absolute h-full w-full bg-slate-950">
-          <div className="relative h-full w-full bg-slate-950">
-            <div className="absolute bottom-0 left-[-20%] right-0 top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]"></div>
-            <div className="absolute bottom-0 right-[-20%] top-[-10%] h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle_farthest-side,rgba(255,0,182,.15),rgba(255,255,255,0))]"></div>
-          </div>
-        </div>
+const RightSide = () => (
+  <div>
+    <h1 className="text-5xl font-YekanBakh-Fat leading-[62px]">
+      نکست پرو: جایی برای یادگیری، اشتراک‌گذاری و رشد توسعه‌دهندگان
+    </h1>
+    <p className="text-xl mt-4 text-zinc-500 font-YekanBakh-Medium">
+      در نکست پرو، کنار یکدیگر یاد می‌گیریم، تجربیات خود را به اشتراک می‌گذاریم
+      و مهارت‌های برنامه‌نویسی‌مان را تقویت می‌کنیم. به جامعه‌ای بپیوندید که از
+      شما و پیشرفتتان حمایت می‌کند.
+    </p>
 
-        <Logo />
-        <div className="text-center w-[90%] sm:w-[70%] mx-auto text-lg relative z-10">
-          <p>
-            نکست پرو، جامعه‌ای است برای افرادی که به دنبال رشد، یادگیری و پیشرفت
-            در دنیای تکنولوژی، برنامه‌نویسی و تولید محتوا هستند. این پلتفرم با
-            هدف ایجاد یک محیط حرفه‌ای برای به اشتراک‌گذاری دانش، تجربه و
-            ایده‌های نوآورانه طراحی شده است.
-          </p>
-        </div>
-      </div>
+    <div className="flex justify-center lg:justify-start font-YekanBakh-Medium tracking-normal items-center gap-3 child:px-4 child:py-2 child:rounded-md text-base child-hover:bg-opacity-90 mt-4">
+      <Button>همین حالا بپیوندید</Button>
+      <button className="hover:bg-indigo-600 hover:text-white duration-100 focus-within:ring-4 bg-indigo-600/10 text-indigo-600">
+        سوال خود را بپرسید
+      </button>
+    </div>
+  </div>
+);
+const LefttSide = () => {
+  const theme = useThemeStore(state => state.isDark);
+  return (
+    <div>
+      <img src={theme ? "/images/hero-dark.svg" : '/images/hero-light.svg'} alt="" />
+    </div>
+  );
+};
+
+const Hero = () => {
+  return (
+    <section className="flex lg:flex-row flex-col-reverse mt-24 lg:mt-0 text-center lg:text-start gap-20 lg:gap-0 tracking-tight child:w-full lg:child:w-1/2 h-[85vh] lg:mr-32 items-center justify-between">
+      <RightSide />
+      <LefttSide />
     </section>
   );
 };
